@@ -1,0 +1,30 @@
+body {
+  font-family: 'Raleway', sans-serif;
+  font-family: 'Montserrat', sans-serif;
+  background-color: #fffcf4;
+}
+
+.contenido {
+  text-align: center;
+  margin: 2% auto;
+}
+
+.heading {
+    font-weight: bolder;
+    color: #3883B2;
+    margin: 2%;
+}
+
+.icons {
+  width: 10%;
+  margin: 10px;
+}
+
+.btn-pdnt {
+  margin: 1.5% auto;
+  background-color: #a0dcf3;
+  width: 52%;
+  font-family: 'Raleway', sans-serif;
+  font-weight: bold;
+  padding: 0!important;
+}
