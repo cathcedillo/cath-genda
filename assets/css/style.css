@@ -28,3 +28,10 @@ body {
   font-weight: bold;
   padding: 0!important;
 }
+
+.conten-lista{
+  background-color: #ffffff;
+  width: 75%;
+  padding: 20px;
+  margin: auto;
+}
