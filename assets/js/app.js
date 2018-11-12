@@ -1,24 +1,42 @@
 var toDo = new Vue({
   el:'#to-do',
   data: {
-    mostrar: true,
-    data: {
-      listaVacia: 'No tienes ningún pendiente, por ahora',
-      listaP: 'Tus pendientes son:'
-    },
-    template: '<div class="conten-lista"></div>'
+    mostrar: false
   },
   methods: {
-    crearEspLista: function () {
-
+    cambiarMostrar: function() {
+      this.mostrar = !this.mostrar
     }
   }
 })
 
- var Pendiente = {
-  name: String,
-  finished: false,
-  lista: [
-    {name: String, status:false}
-  ]
-}
+var taken = new Vue({
+  el:'#taken',
+  data: {
+    mostrar: false
+  },
+  methods: {
+    cambiarMostrar: function() {
+      this.mostrar = !this.mostrar
+    }
+  }
+})
+
+Vue.component ('cath-pendiente', {
+  props: {
+    nombre: String,
+    pendientes: [
+      {
+        nombre: String,
+        status: false
+      }
+    ],
+    status: false
+  },
+  template: `
+      <div>
+        <strong> {{name}} </strong>
+        <div>{{pendientes.name}}</div>
+      </div>
+    `
+})

@@ -23,7 +23,6 @@ body {
 .btn-pdnt {
   margin: 1.5% auto;
   background-color: #a0dcf3;
-  width: 52%;
   font-family: 'Raleway', sans-serif;
   font-weight: bold;
   padding: 0!important;
@@ -31,7 +30,6 @@ body {
 
 .conten-lista{
   background-color: #ffffff;
-  width: 75%;
   padding: 20px;
   margin: auto;
 }

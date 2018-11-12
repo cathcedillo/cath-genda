@@ -11,12 +11,24 @@
   <body>
     <div class="container contenido">
       <h2 class="heading">Organiza tus pendientes</h2>
-      <div class="row" @submit.prevent="crearEspLista">
-        <button type="button" class="btn btn-lg btn-pdnt" id="to-do" @click="crearEspLista">Pendientes por hacer <img class="icons" src="assets/img/to-do.png" alt="icon to-do"></button>
-        <div class="conten-lista" v-hide="mostrar">
-
+      <div class="row">
+        <div class="col-md-6" id="to-do">
+          <button type="button" class="btn btn-lg btn-pdnt" @click="cambiarMostrar">Pendientes por hacer <img class="icons" src="assets/img/to-do.png" alt="icon to-do"></button>
+          <div class="conten-lista" v-if="mostrar">
+            <cath-pendiente
+              v-for="(categ, index) in categorias"
+              :key="index"
+              :nombre="categ.nombre">
+            </cath-pendiente>
+          </div>
         </div>
-        <button type="button" class="btn btn-lg btn-pdnt" id="taken"><img class="icons" src="assets/img/do.png" alt="icon do"> Pendientes terminados</button>
+        <div class="col-md-6" id="taken">
+          <button type="button" class="btn btn-lg btn-pdnt" @click="cambiarMostrar"><img class="icons" src="assets/img/do.png" alt="icon do"> Pendientes terminados</button>
+          <div class="conten-lista" v-if="mostrar">
+
+          </div>
+        </div>
+
       </div>
     </div>
     <script type="text/javascript" src="assets/js/vue.js"></script>
