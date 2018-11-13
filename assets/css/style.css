@@ -33,3 +33,31 @@ body {
   padding: 20px;
   margin: auto;
 }
+
+.vert-al{
+  vertical-align: sub;
+}
+
+.al-check{
+  margin-top: 2%;
+}
+
+.icons-action{
+  width: 6%;
+  margin: 5px;
+  float: right;
+}
+
+.editing{
+  width: 75%!important;
+  display: initial;
+}
+
+.form-ntarea{
+  padding: 10px;
+}
+
+.nueva-categ{
+  width: 50%;
+  display: initial;
+}

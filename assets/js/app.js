@@ -1,12 +1,23 @@
-var toDo = new Vue({
-  el:'#to-do',
+var vm = new Vue({
+  el:'#app',
   data: {
-    mostrar: false,
-    new_task: '',
-    task: [
+    mostrar: true,
+    show: false,
+    new_tarea: '',
+    tareas: [
       {
         nombre: 'Prueba',
         status: false,
+        edit: false
+      },
+      {
+        nombre: 'Prueba',
+        status: false,
+        edit: true
+      },
+      {
+        nombre: 'Prueba',
+        status: true,
         edit: false
       }
     ]
@@ -15,25 +26,16 @@ var toDo = new Vue({
     cambiarMostrar: function() {
       this.mostrar = !this.mostrar
     },
-    createTask: function() {
-      this.tasks.push({
-        nombre: this.new_task,
+    changeShow: function() {
+      this.show = !this.show
+    },
+    createTarea: function() {
+      this.tareas.push({
+        nombre: this.new_tarea,
         status: false,
         edit: false
       });
-      this.new_task = '';
-    }
-  }
-})
-
-var taken = new Vue({
-  el:'#taken',
-  data: {
-    mostrar: false
-  },
-  methods: {
-    cambiarMostrar: function() {
-      this.mostrar = !this.mostrar
+      this.new_tarea = '';
     }
   }
 })

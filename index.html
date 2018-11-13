@@ -11,20 +11,47 @@
   <body>
     <div class="container contenido">
       <h2 class="heading">Organiza tus pendientes</h2>
-      <div class="row">
+      <div class="row" id="app">
         <div class="col-md-6" id="to-do">
           <button type="button" class="btn btn-lg btn-pdnt" @click="cambiarMostrar">Pendientes por hacer <img class="icons" src="assets/img/to-do.png" alt="icon to-do"></button>
           <div class="conten-lista" v-if="mostrar">
-            <form id="form-NPend" @submit.prevent="createTask">
-              <input type="text" placeholder="Nombre categoria" v-model="new_task">
-              <button type="button" name="agregar-Pend">Agregar nuevo pendiente</button>
-              <p>{{new_task}}</p>
-            </form>
+              <ul class="list-group list-group-flush">
+                <li v-for="tarea in tareas" class="list-group-item" :class="{editing: tarea.edit, disabled: tarea.status}">
+                  <div>
+                    <!-- error en la siguiente linea, corregir-->
+                    <input class="form-check-input al-check" type="checkbox" value="" :checked="tarea.status ? '' : false">
+                    <span class="vert-al">{{tarea.nombre}}</span>
+                    <a href="#"><img src="assets/img/trash.png" class="icons-action"></a>
+                    <a href="#"><img src="assets/img/edit.png" class="icons-action"></a>
+                  </div>
+                </li>
+                <!-- <li class="list-group-item editing">
+                  <div>
+                    <input class="form-check-input al-check" type="checkbox" value="">
+                    <input type="text" value="prueba" class="form-control editing">
+                    <a href="#"><img src="assets/img/trash.png" class="icons-action"></a>
+                    <a href="#"><img src="assets/img/save.png" class="icons-action"></a>
+                  </div>
+                </li>
+                <li class="list-group-item disabled">
+                  <div>
+                    <input class="form-check-input al-check" type="checkbox" value="" checked disabled>
+                    <span class="vert-al">Prueba</span>
+                    <a href="#"><img src="assets/img/trash.png" class="icons-action"></a>
+                    <a href="#"><img src="assets/img/edit.png" class="icons-action"></a>
+                  </div>
+                </li> -->
+              </ul>
+              <form class="form-ntarea">
+                <input type="text" placeholder="Nombre categoria" v-model="new_tarea" class="form-control nueva-categ">
+                <button type="button" name="agregar-Pend">Agregar nuevo pendiente</button>
+              </form>
+
           </div>
         </div>
-        <div class="col-md-6" id="taken">
-          <button type="button" class="btn btn-lg btn-pdnt" @click="cambiarMostrar"><img class="icons" src="assets/img/do.png" alt="icon do"> Pendientes terminados</button>
-          <div class="conten-lista" v-if="mostrar">
+        <div class="col-md-6">
+          <button type="button" class="btn btn-lg btn-pdnt" @click="changeShow"><img class="icons" src="assets/img/do.png" alt="icon do"> Pendientes terminados</button>
+          <div class="conten-lista" v-if="show">
 
           </div>
         </div>
