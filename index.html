@@ -15,11 +15,11 @@
         <div class="col-md-6" id="to-do">
           <button type="button" class="btn btn-lg btn-pdnt" @click="cambiarMostrar">Pendientes por hacer <img class="icons" src="assets/img/to-do.png" alt="icon to-do"></button>
           <div class="conten-lista" v-if="mostrar">
-            <cath-pendiente
-              v-for="(categ, index) in categorias"
-              :key="index"
-              :nombre="categ.nombre">
-            </cath-pendiente>
+            <form id="form-NPend" @submit.prevent="createTask">
+              <input type="text" placeholder="Nombre categoria" v-model="new_task">
+              <button type="button" name="agregar-Pend">Agregar nuevo pendiente</button>
+              <p>{{new_task}}</p>
+            </form>
           </div>
         </div>
         <div class="col-md-6" id="taken">
