@@ -5,46 +5,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Cath-genda</title>
     <link href="https://fonts.googleapis.com/css?family=Montserrat|Raleway" rel="stylesheet">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" href="assets/css/style.css">
   </head>
   <body>
     <div class="container contenido">
       <h2 class="heading">Organiza tus pendientes</h2>
       <div class="row" id="app">
-        <div class="col-md-6" id="to-do">
+        <div class="col-md-6">
           <button type="button" class="btn btn-lg btn-pdnt" @click="cambiarMostrar">Pendientes por hacer <img class="icons" src="assets/img/to-do.png" alt="icon to-do"></button>
           <div class="conten-lista" v-if="mostrar">
-              <ul class="list-group list-group-flush">
-                <li v-for="tarea in tareas" class="list-group-item" :class="{editing: tarea.edit, disabled: tarea.status}">
+              <ul class="list-group">
+                <li v-for="(tarea, index) in tareas" class="list-group-item" :class="{editing: tarea.edit, disabled: tarea.status}">
                   <div>
-                    <!-- error en la siguiente linea, corregir-->
-                    <input class="form-check-input al-check" type="checkbox" value="" :checked="tarea.status ? '' : false">
-                    <span class="vert-al">{{tarea.nombre}}</span>
-                    <a href="#"><img src="assets/img/trash.png" class="icons-action"></a>
-                    <a href="#"><img src="assets/img/edit.png" class="icons-action"></a>
+                    <a @click="cambiarStatus(tarea)"><span class="glyphicon" aria-hidden="true" :class="tarea.status ? 'glyphicon-check' : 'glyphicon-unchecked'"></span></a>
+                    <template v-if="!tarea.edit">
+                      <span class="vert-al">{{tarea.nombre}}</span>
+                      <a @click="eliminarTarea(index)"><img src="assets/img/trash.png" class="icons-action"></a>
+                      <a @click="editarTarea(tarea)"><img src="assets/img/edit.png" class="icons-action"></a>
+                    </template>
+
+                    <template v-else>
+                      <input type="text" name="" v-model="borrador">
+                      <a @click="deshacerTarea(tarea)"><img src="assets/img/trash.png" class="icons-action"></a>
+                      <a @click="actualizarTarea(tarea)"><img src="assets/img/save.png" class="icons-action"></a>
+                    </template>
+
                   </div>
                 </li>
-                <!-- <li class="list-group-item editing">
-                  <div>
-                    <input class="form-check-input al-check" type="checkbox" value="">
-                    <input type="text" value="prueba" class="form-control editing">
-                    <a href="#"><img src="assets/img/trash.png" class="icons-action"></a>
-                    <a href="#"><img src="assets/img/save.png" class="icons-action"></a>
-                  </div>
-                </li>
-                <li class="list-group-item disabled">
-                  <div>
-                    <input class="form-check-input al-check" type="checkbox" value="" checked disabled>
-                    <span class="vert-al">Prueba</span>
-                    <a href="#"><img src="assets/img/trash.png" class="icons-action"></a>
-                    <a href="#"><img src="assets/img/edit.png" class="icons-action"></a>
-                  </div>
-                </li> -->
               </ul>
-              <form class="form-ntarea">
-                <input type="text" placeholder="Nombre categoria" v-model="new_tarea" class="form-control nueva-categ">
-                <button type="button" name="agregar-Pend">Agregar nuevo pendiente</button>
+              <form class="form-ntarea" @submit.prevent="createTarea">
+                <input type="text" placeholder="Nombre categoria" v-model="new_tarea" class="form-control input-nt">
+                <button type="button" class="btn nueva-t btn-int" name="agregar-Pend" v-on:click="createTarea">Agregar nuevo pendiente<img src="assets/img/add.png" class="icons"></button>
               </form>
 
           </div>
@@ -53,6 +45,9 @@
           <button type="button" class="btn btn-lg btn-pdnt" @click="changeShow"><img class="icons" src="assets/img/do.png" alt="icon do"> Pendientes terminados</button>
           <div class="conten-lista" v-if="show">
 
+            <form class="form-ntarea" @submit.prevent="createTarea">
+              <button type="button" class="btn btn-block btn-int" name="elim-Complet" v-on:click="eliminarCompletadas">Eliminar tareas completadas <img src="assets/img/flag.png" class="icons"></button>
+            </form>
           </div>
         </div>
 

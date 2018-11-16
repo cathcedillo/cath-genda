@@ -16,7 +16,7 @@ body {
 }
 
 .icons {
-  width: 10%;
+  width: 10%!important;
   margin: 10px;
 }
 
@@ -44,20 +44,33 @@ body {
 
 .icons-action{
   width: 6%;
-  margin: 5px;
+  margin: auto;
   float: right;
 }
 
 .editing{
-  width: 75%!important;
-  display: initial;
+
+}
+
+.disabled{
+  color: #777;
+  filter: grayscale(1);
 }
 
 .form-ntarea{
   padding: 10px;
 }
 
-.nueva-categ{
-  width: 50%;
+.input-nt{
+    width: 48%;
+    display: initial;
+}
+
+.nueva-t{
+  width: 51%;
   display: initial;
+}
+
+.btn-int{
+  background-color: #f3eea2;
 }
