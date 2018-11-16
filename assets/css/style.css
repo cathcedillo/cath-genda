@@ -67,8 +67,9 @@ body {
 }
 
 .nueva-t{
-  width: 51%;
+  width: 48%;
   display: initial;
+  margin: 1%;
 }
 
 .btn-int{

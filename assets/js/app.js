@@ -1,23 +1,25 @@
 var vm = new Vue({
   el:'#app',
   data: {
-    mostrar: true,
-    show: true,
+    mostrar: false,
+    show: false,
+    errors: [],
+    categ: null,
     borrador: '',
-    new_tarea: '',
+    new_tarea: null,
     tareas: [
       {
-        nombre: 'Prueba',
+        nombre: 'Lavar ropa',
         status: false,
         edit: false
       },
       {
-        nombre: 'Prueba',
+        nombre: 'Cocinar',
         status: false,
         edit: false
       },
       {
-        nombre: 'Prueba',
+        nombre: 'Alimentar al gato',
         status: true,
         edit: false
       }
@@ -30,13 +32,27 @@ var vm = new Vue({
     changeShow: function() {
       this.show = !this.show
     },
-    createTarea: function() {
+    createCateg: function() {
+      if (this.categ === null || this.categ === '') {
+        this.errors.push('Nombre categoria required.');
+      }
       this.tareas.push({
-        nombre: this.new_tarea,
-        status: false,
-        edit: false
+        nombre: this.categ,
+        status: false
       });
-      this.new_tarea = '';
+      this.categ = '';
+    },
+    createTarea: function() {
+      if (this.new_tarea === null || this.new_tarea === '') {
+        this.errors.push('Nueva tarea required.');
+      } else {
+        this.tareas.push({
+          nombre: this.new_tarea,
+          status: false,
+          edit: false
+        });
+        this.new_tarea = '';
+      }
     },
     cambiarStatus: function (tarea) {
       tarea.status = !tarea.status;
@@ -62,6 +78,27 @@ var vm = new Vue({
       this.tareas = this.tareas.filter(function (tarea) {
         return !tarea.status;
       });
+    },
+    regrPendientes: function () {
+      this.tarea.status == false;
+    },
+    checkForm: function (e) {
+      if (this.categ && this.new_tarea) {
+        return true;
+        createCateg();
+        createTarea();
+      }
+
+      this.errors = [];
+
+      if (!this.categ) {
+        this.errors.push('Nombre categoria required.');
+      }
+      if (!this.new_tarea) {
+        this.errors.push('Nueva tarea required.');
+      }
+
+      e.preventDefault();
     }
   }
 })
