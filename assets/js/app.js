@@ -1,12 +1,35 @@
 var vm = new Vue({
   el:'#app',
   data: {
-    mostrar: false,
-    show: false,
+    mostrar: true,
+    show: true,
     errors: [],
     categ: null,
     borrador: '',
     new_tarea: null,
+    pendientes: [
+      {
+        categoria: 'Hogar',
+        tareas: [
+          {
+            nombre: 'Lavar ropa',
+            status: false,
+            edit: false
+          },
+          {
+            nombre: 'Cocinar',
+            status: false,
+            edit: false
+          },
+          {
+            nombre: 'Alimentar al gato',
+            status: true,
+            edit: false
+          }
+        ],
+        status: false
+      }
+    ],
     tareas: [
       {
         nombre: 'Lavar ropa',
@@ -36,7 +59,7 @@ var vm = new Vue({
       if (this.categ === null || this.categ === '') {
         this.errors.push('Nombre categoria required.');
       }
-      this.tareas.push({
+      this.pendientes.push({
         nombre: this.categ,
         status: false
       });
