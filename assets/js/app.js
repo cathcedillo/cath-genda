@@ -4,8 +4,8 @@ var vm = new Vue({
     mostrar: true,
     show: true,
     errors: [],
-    categ: null,
     borrador: '',
+    categ: null,
     new_tarea: null,
     pendientes: [
       {
@@ -28,23 +28,22 @@ var vm = new Vue({
           }
         ],
         status: false
-      }
-    ],
-    tareas: [
-      {
-        nombre: 'Lavar ropa',
-        status: false,
-        edit: false
       },
       {
-        nombre: 'Cocinar',
-        status: false,
-        edit: false
-      },
-      {
-        nombre: 'Alimentar al gato',
-        status: true,
-        edit: false
+        categoria: 'Escuela',
+        tareas: [
+          {
+            nombre: 'Tarea matematicas',
+            status: false,
+            edit: false
+          },
+          {
+            nombre: 'Limpiar mochila',
+            status: false,
+            edit: false
+          }
+        ],
+        status: false
       }
     ]
   },
@@ -55,26 +54,44 @@ var vm = new Vue({
     changeShow: function() {
       this.show = !this.show
     },
+    checkForm: function (e) {
+      if (this.categ && this.new_tarea) {
+        return true;
+        createCateg();
+      }
+
+      this.errors = [];
+
+      if (!this.categ) {
+        this.errors.push('Nombre categoria required.');
+      }
+      if (!this.new_tarea) {
+        this.errors.push('Nueva tarea required.');
+      }
+      e.preventDefault();
+    },
     createCateg: function() {
       if (this.categ === null || this.categ === '') {
         this.errors.push('Nombre categoria required.');
+      } else {
+        this.pendientes.push({
+          nombre: this.categ,
+          tareas: [createTarea()],
+          status: false
+        });
+        this.categ = '';
       }
-      this.pendientes.push({
-        nombre: this.categ,
-        status: false
-      });
-      this.categ = '';
     },
     createTarea: function() {
       if (this.new_tarea === null || this.new_tarea === '') {
         this.errors.push('Nueva tarea required.');
       } else {
         this.tareas.push({
-          nombre: this.new_tarea,
-          status: false,
-          edit: false
-        });
-        this.new_tarea = '';
+            nombre: this.new_tarea,
+            status: false,
+            edit: false
+          });
+          this.new_tarea = '';
       }
     },
     cambiarStatus: function (tarea) {
@@ -104,24 +121,6 @@ var vm = new Vue({
     },
     regrPendientes: function () {
       this.tarea.status == false;
-    },
-    checkForm: function (e) {
-      if (this.categ && this.new_tarea) {
-        return true;
-        createCateg();
-        createTarea();
-      }
-
-      this.errors = [];
-
-      if (!this.categ) {
-        this.errors.push('Nombre categoria required.');
-      }
-      if (!this.new_tarea) {
-        this.errors.push('Nueva tarea required.');
-      }
-
-      e.preventDefault();
     }
   }
 })
