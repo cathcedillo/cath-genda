@@ -75,8 +75,7 @@ var vm = new Vue({
         this.errors.push('Nombre categoria required.');
       } else {
         this.pendientes.push({
-          nombre: this.categ,
-          tareas: [createTarea()],
+          categoria: this.categ,
           status: false
         });
         this.categ = '';
@@ -97,30 +96,33 @@ var vm = new Vue({
     cambiarStatus: function (tarea) {
       tarea.status = !tarea.status;
     },
-    editarTarea: function (tarea) {
-      this.tareas.forEach(function (tarea) {
+    editarTarea: function (indx,tarea) {
+      this.pendientes[indx].tareas.forEach(function (tarea) {
         tarea.edit = false;
       });
       this.borrador = tarea.nombre;
       tarea.edit = true;
     },
-    deshacerTarea: function (tarea) {
-      tarea.edit = false;
-    },
     actualizarTarea: function (tarea) {
       tarea.nombre = this.borrador;
       tarea.edit = false;
+      this.borrador = '';
     },
-    eliminarTarea: function (index) {
-      this.tareas.splice(index, 1);
+    deshacerTarea: function (tarea) {
+      tarea.edit = false;
+    },
+    eliminarTarea: function (indx,index) {
+      this.pendientes[indx].tareas.splice(index, 1);
     },
     eliminarCompletadas: function () {
-      this.tareas = this.tareas.filter(function (tarea) {
-        return !tarea.status;
+      this.pendientes = this.pendientes.filter(function (pendiente) {
+        return !pendiente.status;
       });
     },
-    regrPendientes: function () {
-      this.tarea.status == false;
+    cambiarStatusPend: function (tarea) {
+      if (this.tareas.status === true) {
+        return pendiente.status = true;
+      }
     }
   }
 })
