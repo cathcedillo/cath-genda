@@ -7,6 +7,8 @@ var vm = new Vue({
     borrador: '',
     categ: null,
     new_tarea: null,
+    contT: 0,
+    contF: 0,
     pendientes: [
       {
         categoria: 'Hogar',
@@ -119,10 +121,19 @@ var vm = new Vue({
         return !pendiente.status;
       });
     },
-    cambiarStatusPend: function (tarea) {
-      if (this.tareas.status === true) {
-        return pendiente.status = true;
+    cambiarStatusPend: function (indx,tarea) {
+      this.pendientes[indx].tareas.forEach(function (tarea) {
+        if (this.pendientes[indx].tareas.status === true) {
+          this.contT++;
+        } else {
+          this.contF++;
+        }
+      });
+      if (contT === this.pendientes[indx].length) {
+        return this.pendientes[indx].status = true;
       }
+      this.contT = 0;
+      this.contF = 0;
     }
   }
 })

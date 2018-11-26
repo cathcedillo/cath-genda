@@ -19,7 +19,7 @@
               <ul class="list-group">
                 <li v-if="tarea.status === false" v-for="(tarea, index) in pendiente.tareas" class="list-group-item" :class="{editing: tarea.edit}">
                   <div>
-                    <a @click="cambiarStatus(tarea)"><span class="glyphicon" aria-hidden="true" :class="tarea.status ? 'glyphicon-check' : 'glyphicon-unchecked'"></span></a>
+                    <a @click="cambiarStatus(tarea), cambiarStatusPend(indx,tarea)"><span class="glyphicon" aria-hidden="true" :class="tarea.status ? 'glyphicon-check' : 'glyphicon-unchecked'"></span></a>
                     <template v-if="!tarea.edit">
                       <span class="vert-al">{{pendiente.tareas[index].nombre}}</span>
                       <a @click="eliminarTarea(indx,index)"><img src="assets/img/trash.png" class="icons-action"></a>
@@ -49,27 +49,29 @@
           <button type="button" class="btn btn-lg btn-pdnt" @click="changeShow"><img class="icons" src="assets/img/do.png" alt="icon do"> Pendientes terminados</button>
           <div class="conten-lista" v-if="show">
 
-            <div v-for="(pendiente, indx) in pendientes">{{pendiente.categoria}}
-              <ul class="list-group">
-                <li v-if="tarea.status === true" v-for="(tarea, index) in pendiente.tareas" class="list-group-item" :class="{editing: tarea.edit, disabled: tarea.status}">
-                  <div>
-                    <a @click="cambiarStatus(tarea)"><span class="glyphicon" aria-hidden="true" :class="tarea.status ? 'glyphicon-check' : 'glyphicon-unchecked'"></span></a>
-                    <template v-if="!tarea.edit">
-                      <span class="vert-al">{{pendiente.tareas[index].nombre}}</span>
-                      <a @click="eliminarTarea(indx,index)"><img src="assets/img/trash.png" class="icons-action"></a>
-                      <a @click="editarTarea(indx,tarea)"><img src="assets/img/edit.png" class="icons-action"></a>
-                    </template>
+            <div v-for="(pendiente, indx) in pendientes">
+              <div v-for="(tarea, index) in pendiente.tareas">
+                <template v-if="pendiente.tareas[index].status === true">{{pendiente.categoria}}
+                  <ul class="list-group">
+                    <li v-if="tarea.status === true" v-for="(tarea, index) in pendiente.tareas" class="list-group-item" :class="{editing: tarea.edit, disabled: tarea.status}">
+                        <a @click="cambiarStatus(indx,tarea)"><span class="glyphicon" aria-hidden="true" :class="tarea.status ? 'glyphicon-check' : 'glyphicon-unchecked'"></span></a>
+                        <template v-if="!tarea.edit">
+                          <span class="vert-al">{{pendiente.tareas[index].nombre}}</span>
+                          <a @click="eliminarTarea(indx,index)"><img src="assets/img/trash.png" class="icons-action"></a>
+                          <a @click="editarTarea(indx,tarea)"><img src="assets/img/edit.png" class="icons-action"></a>
+                        </template>
 
-                    <template v-else>
-                      <input type="text" name="" v-model="borrador">
-                      <a @click="deshacerTarea(tarea)"><img src="assets/img/trash.png" class="icons-action"></a>
-                      <a @click="actualizarTarea(tarea)"><img src="assets/img/save.png" class="icons-action"></a>
-                    </template>
-
-                  </div>
-                </li>
-              </ul>
+                        <template v-else>
+                          <input type="text" name="" v-model="borrador">
+                          <a @click="deshacerTarea(tarea)"><img src="assets/img/trash.png" class="icons-action"></a>
+                          <a @click="actualizarTarea(tarea)"><img src="assets/img/save.png" class="icons-action"></a>
+                        </template>
+                    </li>
+                  </ul>
+                </template>
+              </div>
             </div>
+
 
               <form class="form-ntarea" @submit.prevent="eliminarCompletadas">
                 <button type="button" class="btn btn-block btn-int" name="elim-Complet" v-on:click="eliminarCompletadas">Eliminar pendientes completados <img src="assets/img/flag.png" class="icons"></button>
