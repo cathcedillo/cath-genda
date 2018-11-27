@@ -73,26 +73,27 @@ var vm = new Vue({
       e.preventDefault();
     },
     createCateg: function() {
-      if (this.categ === null || this.categ === '') {
-        this.errors.push('Nombre categoria required.');
-      } else {
-        this.pendientes.push({
-          categoria: this.categ,
-          status: false
-        });
-        this.categ = '';
-      }
-    },
-    createTarea: function() {
-      if (this.new_tarea === null || this.new_tarea === '') {
-        this.errors.push('Nueva tarea required.');
-      } else {
-        this.tareas.push({
+      if (this.pendientes.includes(this.categ)) {
+        this.pendientes[indexOf(this.categ)].tareas.push({
             nombre: this.new_tarea,
             status: false,
             edit: false
           });
           this.new_tarea = '';
+      } else {
+        this.pendientes.push({
+          categoria: this.categ,
+          tareas: [
+            {
+              nombre: this.new_tarea,
+              status: false,
+              edit: false
+            }
+          ],
+          status: false
+        });
+        this.categ = '';
+        this.new_tarea = '';
       }
     },
     cambiarStatus: function (tarea) {
@@ -116,24 +117,12 @@ var vm = new Vue({
     eliminarTarea: function (indx,index) {
       this.pendientes[indx].tareas.splice(index, 1);
     },
-    eliminarCompletadas: function () {
-      this.pendientes = this.pendientes.filter(function (pendiente) {
-        return !pendiente.status;
-      });
-    },
-    cambiarStatusPend: function (indx,tarea) {
+    statusTareas: function (indx) {
       this.pendientes[indx].tareas.forEach(function (tarea) {
-        if (this.pendientes[indx].tareas.status === true) {
-          this.contT++;
-        } else {
-          this.contF++;
+        if (tarea.status === false) {
+          return true;
         }
       });
-      if (contT === this.pendientes[indx].length) {
-        return this.pendientes[indx].status = true;
-      }
-      this.contT = 0;
-      this.contF = 0;
     }
   }
 })
